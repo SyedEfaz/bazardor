@@ -1,13 +1,12 @@
 "use client";
 import { useMemo, useState } from "react";
 import type { Product } from "@/lib/types";
-import { formatPrice, parseBn } from "@/lib/bn";
 import ProductGrid from "./ProductGrid";
 
 export default function CategoryView({ items }: { items: Product[] }) {
   const [sort, setSort] = useState("default");
   const sorted = useMemo(() => {
-    const priceOf = (p: Product) => parseBn(formatPrice(p.today)); // Bengali string -> number
+    const priceOf = (p: Product) => Number(p.today ?? 0);
     if (sort === "asc") return [...items].sort((a, b) => priceOf(a) - priceOf(b));
     if (sort === "desc") return [...items].sort((a, b) => priceOf(b) - priceOf(a));
     return items;
