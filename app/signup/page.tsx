@@ -13,14 +13,17 @@ export default function SignUp() {
     e.preventDefault(); setLoading(true);
     const f = new FormData(e.currentTarget);
 
-    
+
     try {
       const { error } = await authClient.signUp.email({ name: String(f.get("name")), email: String(f.get("email")), password: String(f.get("password")) });
       if (error) return toast.error(error.message || "নিবন্ধন ব্যর্থ হয়েছে");
       toast.success("নিবন্ধন সফল হয়েছে। এখন লগইন করুন");
       router.push("/signin");
     } catch {
+
       toast.error("নিবন্ধন সার্ভারে সংযোগ করা যায়নি");
+
+      
     } finally {
       setLoading(false);
     }
